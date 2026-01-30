@@ -122,6 +122,7 @@ use crate::profiling_manager::StarlarkProfilingManager;
 use crate::snapshot;
 use crate::snapshot::SnapshotCollector;
 use crate::subscription::run_subscription_server_command;
+use crate::invalidate::invalidate_command;
 use crate::trace_io::trace_io_command;
 use crate::version_control_revision;
 
@@ -1552,6 +1553,21 @@ impl DaemonApi for BuckdServer {
             DefaultCommandOptions,
             |context, _: PartialResultDispatcher<NoPartialResult>, req| {
                 trace_io_command(context, req).boxed()
+            },
+        )
+        .await
+    }
+
+    type InvalidateStream = ResponseStream;
+    async fn invalidate(
+        &self,
+        req: Request<InvalidateCacheRequest>,
+    ) -> Result<Response<ResponseStream>, Status> {
+        self.run_streaming(
+            req,
+            DefaultCommandOptions,
+            |context, partial_result_dispatcher: PartialResultDispatcher<NoPartialResult>, req| {
+                invalidate_command(context, partial_result_dispatcher, req).boxed()
             },
         )
         .await

@@ -22,6 +22,7 @@ mod dice_tracker;
 mod file_status;
 mod heartbeat_guard;
 mod host_info;
+mod invalidate;
 mod jemalloc_stats;
 pub mod lsp;
 mod materialize;

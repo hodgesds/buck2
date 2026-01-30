@@ -22,6 +22,7 @@ use buck2_client::commands::explain::ExplainCommand;
 use buck2_client::commands::help_env::HelpEnvCommand;
 use buck2_client::commands::init::InitCommand;
 use buck2_client::commands::install::InstallCommand;
+use buck2_client::commands::invalidate::InvalidateCommand;
 use buck2_client::commands::kill::KillCommand;
 use buck2_client::commands::killall::KillallCommand;
 use buck2_client::commands::lsp::LspCommand;
@@ -341,6 +342,7 @@ pub(crate) enum CommandKind {
     Test(TestCommand),
     Cquery(CqueryCommand),
     Init(InitCommand),
+    Invalidate(InvalidateCommand),
     Explain(ExplainCommand),
     ExpandExternalCell(ExpandExternalCellsCommand),
     Install(InstallCommand),
@@ -535,6 +537,7 @@ impl CommandKind {
             CommandKind::Init(cmd) => cmd.exec(matches, command_ctx),
             CommandKind::Explain(cmd) => command_ctx.exec(cmd, matches, events_ctx),
             CommandKind::Install(cmd) => command_ctx.exec(cmd, matches, events_ctx),
+            CommandKind::Invalidate(cmd) => command_ctx.exec(cmd, matches, events_ctx),
             CommandKind::Log(cmd) => cmd.exec(matches, command_ctx, events_ctx),
             CommandKind::Lsp(cmd) => command_ctx.exec(cmd, matches, events_ctx),
             CommandKind::Subscribe(cmd) => command_ctx.exec(cmd, matches, events_ctx),
@@ -579,6 +582,7 @@ impl CommandKind {
             CommandKind::Init(_) => "init",
             CommandKind::Explain(cmd) => cmd.logging_name(),
             CommandKind::Install(cmd) => cmd.logging_name(),
+            CommandKind::Invalidate(cmd) => cmd.logging_name(),
             CommandKind::Log(cmd) => cmd.command_name(),
             CommandKind::Lsp(cmd) => cmd.logging_name(),
             CommandKind::Subscribe(cmd) => cmd.logging_name(),

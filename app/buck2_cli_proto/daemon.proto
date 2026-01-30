@@ -720,6 +720,7 @@ message CommandResult {
     DapResponse dap_response = 24;
     GenericResponse generic_response = 100;
     NewGenericResponseMessage new_generic_response_message = 101;
+    InvalidateCacheResponse invalidate_cache_response = 102;
   }
 }
 
@@ -924,6 +925,17 @@ message FlushDepFilesRequest {
   bool retain_locally_produced_dep_files = 1;
 }
 
+message InvalidateCacheRequest {
+  ClientContext context = 1;
+  repeated string target_patterns = 2;
+  bool invalidate_artifacts = 3;
+}
+
+message InvalidateCacheResponse {
+  uint64 dice_keys_invalidated = 1;
+  uint64 artifacts_invalidated = 2;
+}
+
 message SetLogFilterRequest {
   string log_filter = 1;
   bool daemon = 2;
@@ -1037,6 +1049,9 @@ service DaemonApi {
 
   // Interact with daemon I/O tracing.
   rpc TraceIo(TraceIoRequest) returns (stream MultiCommandProgress);
+
+  // Invalidate DICE cache entries for specific targets
+  rpc Invalidate(InvalidateCacheRequest) returns (stream MultiCommandProgress);
 }
 
 // This struct is written to `~/.buck/paranoid.info` by `buck2 paranoid

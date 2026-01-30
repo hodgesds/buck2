@@ -618,6 +618,12 @@ impl FlushingBuckdClient<'_> {
 
     wrap_method!(set_log_filter(log_filter: SetLogFilterRequest), ());
     stream_method!(trace_io, TraceIoRequest, TraceIoResponse, NoPartialResult);
+    stream_method!(
+        invalidate,
+        InvalidateCacheRequest,
+        InvalidateCacheResponse,
+        NoPartialResult
+    );
 
     pub async fn new_generic(
         &mut self,

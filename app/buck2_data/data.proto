@@ -1069,6 +1069,7 @@ message CommandStart {
     ExplainCommandStart explain = 40;
     ExpandExternalCellsCommandStart expand_external_cell = 41;
     CompleteCommandStart complete = 42;
+    InvalidateCacheCommandStart invalidate = 43;
   }
 }
 
@@ -1174,6 +1175,7 @@ message CommandEnd {
     ExplainCommandEnd explain = 40;
     ExpandExternalCellsCommandEnd expand_external_cell = 41;
     CompleteCommandEnd complete = 42;
+    InvalidateCacheCommandEnd invalidate = 43;
   }
 
   // This should eventually be deleted. Retaining only so that ingress
@@ -3045,6 +3047,10 @@ message NetworkInterfaceStats {
 message TraceIoCommandStart {}
 
 message TraceIoCommandEnd {}
+
+message InvalidateCacheCommandStart {}
+
+message InvalidateCacheCommandEnd {}
 
 message SetupLocalResourcesStart {
   ConfiguredTargetLabel target_label = 1;

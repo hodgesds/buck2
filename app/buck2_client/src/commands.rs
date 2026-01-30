@@ -18,6 +18,7 @@ pub mod explain;
 pub mod help_env;
 pub mod init;
 pub mod install;
+pub mod invalidate;
 pub mod kill;
 pub mod killall;
 pub mod lsp;
